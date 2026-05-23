@@ -6,16 +6,12 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=2.2.6",
-    "pandas>=2.3.3",
     "scikit-learn>=1.7.2",
-    "seaborn>=0.13.2",
-    "intel-extension-for-pytorch==2.8.0",
     "torch==2.8.0+cpu",
-    "torchvision>=0.23.0",
-    "ultralytics>=8.4.51",
+    "torchvision==0.23.0+cpu",
     "torchaudio==2.8.0+cpu",
     "soundfile>=0.13.1",
-    "sounddevice>=0.5.5",
+    "matplotlib>=3.9.0",
 ]
 
 [[tool.uv.index]]

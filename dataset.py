@@ -10,9 +10,10 @@ LABELS = ['yes', 'no', 'up', 'down', 'left', 'right', 'on', 'off', 'stop', 'go']
 label_to_index = {label: i for i, label in enumerate(LABELS)}
 
 class SpeechCommandsPipeline(Dataset):
-    def __init__(self, subset='training', root='./dataset_audio'):
+    def __init__(self, subset='training', root='./dataset_audio', return_path=False):
         self.dataset = torchaudio.datasets.SPEECHCOMMANDS(root=root, download=True, subset=subset)
         self.mel_transform, self.amp_to_db = build_audio_transforms(sample_rate=TARGET_SR)
+        self.return_path = return_path
         
         # Filtriamo il dataset per tenere solo le classi che ci interessano (opzionale)
         self.valid_indices = []
@@ -36,7 +37,11 @@ class SpeechCommandsPipeline(Dataset):
         
         # Mappa la label in numero
         label_idx = label_to_index[label]
-        
+
+        if self.return_path:
+            file_path = self.dataset._walker[actual_idx]
+            return mel_spec, label_idx, file_path
+
         return mel_spec, label_idx
 
 def get_dataloaders(batch_size=64):

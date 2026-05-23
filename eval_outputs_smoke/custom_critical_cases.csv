@@ -1,5 +1,0 @@
-file,light_pred,light_conf,resnet_pred,resnet_conf,disagree,min_conf
-tmp_custom_eval/4f2be90f_nohash_0.wav,off,0.4111,down,0.3621,1,0.3621
-tmp_custom_eval/c2d15ea5_nohash_0.wav,go,0.7711,stop,0.5163,1,0.5163
-tmp_custom_eval/01bb6a2a_nohash_0.wav,stop,0.7357,go,0.7531,1,0.7357
-tmp_custom_eval/2b5e346d_nohash_0.wav,down,0.9669,down,0.9504,0,0.9504

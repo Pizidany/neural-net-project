@@ -3,12 +3,16 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import argparse
+import os
 from dataset import get_dataloaders
 from models import LightCNN, AudioResNet
+
+CHECKPOINT_DIR = "checkpoints"
 
 def train(model_name, epochs=10, batch_size=64, lr=0.001):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Uso il dispositivo: {device}")
+    os.makedirs(CHECKPOINT_DIR, exist_ok=True)
     
     train_loader, val_loader, _ = get_dataloaders(batch_size)
     
@@ -66,7 +70,7 @@ def train(model_name, epochs=10, batch_size=64, lr=0.001):
         # Salva il modello migliore
         if val_acc > best_val_acc:
             best_val_acc = val_acc
-            torch.save(model.state_dict(), f"best_{model_name}.pth")
+            torch.save(model.state_dict(), os.path.join(CHECKPOINT_DIR, f"best_{model_name}.pth"))
             print("=> Modello migliore salvato!")
 
 if __name__ == '__main__':
