@@ -1,0 +1,5 @@
+# created by virtualenv automatically
+dataset_audio/
+*.wav
+.venv/
+__pycache__/
