@@ -13,7 +13,9 @@ N_FFT = 1024
 HOP_LENGTH = 512
 N_MELS = 64
 
+# Funzioni di utilità per il preprocessing audio, trasformazioni e caricamento da file
 
+# Costruisce le trasformazioni per convertire un waveform in un mel spectrogram in dB
 def build_audio_transforms(
     sample_rate: int = TARGET_SR,
     n_fft: int = N_FFT,
@@ -29,7 +31,7 @@ def build_audio_transforms(
     amp_to_db = T.AmplitudeToDB()
     return mel_transform, amp_to_db
 
-
+# Pad o crop un waveform a una lunghezza fissa (num_samples), utile per uniformare l'input al modello
 def pad_or_crop_waveform(waveform: torch.Tensor, num_samples: int = NUM_SAMPLES) -> torch.Tensor:
     if waveform.dim() == 1:
         waveform = waveform.unsqueeze(0)
@@ -41,25 +43,28 @@ def pad_or_crop_waveform(waveform: torch.Tensor, num_samples: int = NUM_SAMPLES)
         waveform = waveform[:, :num_samples]
     return waveform
 
-
+# Preprocessa un file audio dato il suo percorso,
+# restituendo un tensore per essere passato al modello
 def preprocess_waveform_np(
     waveform_np: np.ndarray,
     sr: int,
     target_sr: int = TARGET_SR,
     num_samples: int = NUM_SAMPLES,
 ) -> torch.Tensor:
+    # Se l'audio ha più canali, convertilo in mono facendo la media tra i canali
     if waveform_np.ndim > 1:
         waveform_np = np.mean(waveform_np, axis=1)
 
     waveform = torch.from_numpy(waveform_np.astype(np.float32))
 
+    # Se la frequenza di campionamento del file è diversa da quella target, resamplea l'audio
     if sr != target_sr:
         waveform = torchaudio.functional.resample(waveform, orig_freq=sr, new_freq=target_sr)
 
     waveform = pad_or_crop_waveform(waveform, num_samples=num_samples)
     return waveform
 
-
+# Funzione per convertire un waveform in un mel spectrogram in dB usando le trasformazioni costruite
 def waveform_to_mel_db(
     waveform: torch.Tensor,
     mel_transform: T.MelSpectrogram,
@@ -69,7 +74,8 @@ def waveform_to_mel_db(
         waveform = waveform.unsqueeze(0)
     return amp_to_db(mel_transform(waveform))
 
-
+# Funzione per caricare un file audio da percorso,
+# preprocessarlo e restituire un tensore per il modello
 def load_audio_file(filepath: str, target_sr: int = TARGET_SR) -> torch.Tensor:
     if not os.path.isfile(filepath):
         raise FileNotFoundError(f"File non trovato: {filepath}")

@@ -1,0 +1,12 @@
+\contentsline {section}{\numberline {1}Introduzione}{3}{}%
+\contentsline {section}{\numberline {2}Scelta del task e criterio di valutazione}{3}{}%
+\contentsline {subsection}{\numberline {2.1}Perché una CNN per l'audio}{3}{}%
+\contentsline {section}{\numberline {3}Dataset e preprocessing}{3}{}%
+\contentsline {section}{\numberline {4}Architetture considerate}{4}{}%
+\contentsline {section}{\numberline {5}Addestramento e valutazione}{4}{}%
+\contentsline {section}{\numberline {6}Analisi delle prestazioni}{5}{}%
+\contentsline {subsection}{\numberline {6.1}Matrice di confusione del modello leggero}{5}{}%
+\contentsline {subsection}{\numberline {6.2}Matrice di confusione del modello ResNet}{6}{}%
+\contentsline {subsection}{\numberline {6.3}Analisi degli errori}{6}{}%
+\contentsline {subsection}{\numberline {6.4}Considerazioni sulla scelta del modello}{7}{}%
+\contentsline {section}{\numberline {7}Conclusioni}{7}{}%
