@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 from sklearn.metrics import ConfusionMatrixDisplay, classification_report, confusion_matrix
 
 from dataset import LABELS, SpeechCommandsPipeline
-from models import AudioResNet, LightCNN
+from models import AudioResNet, LightCNN, AudioMobileNetV2, AudioAlexNet
 
 OUT_DIR = "eval_out"
 CHECKPOINT_DIR = "checkpoints"
@@ -24,8 +24,12 @@ def evaluate(model_name: str):
         model = LightCNN(num_classes=len(LABELS))
     elif model_name == "resnet":
         model = AudioResNet(num_classes=len(LABELS))
+    elif model_name == "mobilenet":
+        model = AudioMobileNetV2(num_classes=len(LABELS))
+    elif model_name == "alexnet":
+        model = AudioAlexNet(num_classes=len(LABELS))
     else:
-        raise ValueError("Modello non riconosciuto. Scegli tra 'light' e 'resnet'")
+        raise ValueError("Modello non riconosciuto. Scegli tra 'light', 'resnet', 'mobilenet' o 'alexnet'")
 
     # Carica i pesi del modello e mettilo in modalità eval
     model.load_state_dict(torch.load(checkpoint, map_location=device))
@@ -97,7 +101,7 @@ def evaluate(model_name: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Valutazione semplice dei modelli audio")
-    parser.add_argument("model", nargs="?", choices=["light", "resnet"], default="light")
+    parser.add_argument('--model', type=str, required=True, choices=['light', 'resnet', 'mobilenet', 'alexnet'], help="Scegli 'light', 'resnet', 'mobilenet' o 'alexnet'")
     args = parser.parse_args()
     
     evaluate(model_name=args.model)

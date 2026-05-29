@@ -96,4 +96,7 @@ class AudioAlexNet(nn.Module):
         self.alexnet.features[0] = nn.Conv2d(1, 64, kernel_size=11, stride=4, padding=2)
 
     def forward(self, x):
+        # AlexNet needs a larger, square spatial map than the raw audio features provide.
+        # Upsample only for this backbone so the rest of the pipeline can stay unchanged.
+        x = torch.nn.functional.interpolate(x, size=(64, 64), mode="bilinear", align_corners=False)
         return self.alexnet(x)
