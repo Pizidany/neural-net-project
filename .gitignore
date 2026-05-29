@@ -3,7 +3,6 @@ dataset_audio/
 *.wav
 .venv/
 __pycache__/
-.png
 /Report/*
 !/Report/report.pdf
 checkpoints/best_alexnet.pth
