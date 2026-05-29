@@ -1,11 +1,4 @@
 # Neural Project — Riconoscimento comandi vocali
-Breve README per eseguire e valutare i modelli su SpeechCommands.
-
-**Contenuto**
-- Panoramica
-- Dataset
-- Addestramento
-- Valutazione e ispezione degli errori
 
 Panoramica
 ---------
